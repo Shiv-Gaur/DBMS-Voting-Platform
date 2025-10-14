@@ -12,7 +12,6 @@ import com.votingplatform.repository.UserRepository;
 import com.votingplatform.repository.VoteRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -33,9 +32,6 @@ public class VoteService {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private SimpMessagingTemplate messagingTemplate;
 
     public Vote castVote(VoteRequest request, HttpServletRequest httpRequest) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -59,13 +55,7 @@ public class VoteService {
         vote.setUser(user);
         vote.setIpAddress(getClientIp(httpRequest));
 
-        Vote savedVote = voteRepository.save(vote);
-
-        // Send real-time update via WebSocket
-        List<VoteResultDTO> results = getPollResults(request.getPollId());
-        messagingTemplate.convertAndSend("/topic/poll/" + request.getPollId(), results);
-
-        return savedVote;
+        return voteRepository.save(vote);
     }
 
     public boolean hasUserVoted(Long pollId) {

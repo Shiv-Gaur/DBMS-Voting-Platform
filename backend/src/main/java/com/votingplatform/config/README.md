@@ -5,4 +5,3 @@
 **Files**:
 - `DataInitializer.java` - Creates default users on startup
 - `SecurityConfig.java` - Security & CORS configuration
-- `WebSocketConfig.java` - Real-time WebSocket setup
