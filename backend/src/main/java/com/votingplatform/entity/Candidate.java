@@ -1,5 +1,6 @@
 package com.votingplatform.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,5 +25,6 @@ public class Candidate {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "poll_id", nullable = false)
+    @JsonIgnoreProperties({"candidates", "createdBy", "hibernateLazyInitializer", "handler"})
     private Poll poll;
 }

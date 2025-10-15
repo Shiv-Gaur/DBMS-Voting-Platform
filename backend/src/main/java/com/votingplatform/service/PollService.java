@@ -31,7 +31,7 @@ public class PollService {
         poll.setDescription(request.getDescription());
         poll.setStartDate(request.getStartDate());
         poll.setEndDate(request.getEndDate());
-        poll.setStatus(Poll.Status.PENDING);
+        poll.setStatus(Poll.Status.ACTIVE);  // Changed from PENDING to ACTIVE
         poll.setCreatedBy(user);
 
         return pollRepository.save(poll);

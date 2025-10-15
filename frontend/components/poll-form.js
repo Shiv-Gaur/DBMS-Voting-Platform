@@ -72,6 +72,8 @@ export function PollForm({ onSuccess, onCancel, poll }) {
         status: 'PENDING',
       }
 
+      console.log('Sending poll data:', pollData)
+
       let createdPoll
       if (poll) {
         createdPoll = await pollApi.updatePoll(poll.id, pollData)

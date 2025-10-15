@@ -7,6 +7,7 @@ import com.votingplatform.repository.CandidateRepository;
 import com.votingplatform.service.PollService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class PollController {
     private CandidateRepository candidateRepository;
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Poll> createPoll(@RequestBody PollRequest request) {
         Poll poll = pollService.createPoll(request);
         return ResponseEntity.ok(poll);
@@ -48,12 +50,14 @@ public class PollController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Poll> updatePoll(@PathVariable Long id, @RequestBody PollRequest request) {
         Poll poll = pollService.updatePoll(id, request);
         return ResponseEntity.ok(poll);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deletePoll(@PathVariable Long id) {
         pollService.deletePoll(id);
         return ResponseEntity.ok().build();
@@ -66,6 +70,7 @@ public class PollController {
     }
 
     @PostMapping("/{pollId}/candidates")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Candidate> addCandidate(@PathVariable Long pollId, @RequestBody Map<String, String> request) {
         Poll poll = pollService.getPollById(pollId);
         

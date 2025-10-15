@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface PollRepository extends JpaRepository<Poll, Long> {
     
-    @Query("SELECT p FROM Poll p WHERE p.status = 'ACTIVE' AND p.startDate <= :now AND p.endDate >= :now")
+    @Query("SELECT p FROM Poll p WHERE p.status = 'ACTIVE'")
     List<Poll> findActivePolls(LocalDateTime now);
     
     List<Poll> findByStatus(Poll.Status status);
