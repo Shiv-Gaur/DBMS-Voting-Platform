@@ -63,6 +63,20 @@ public class PollController {
         return ResponseEntity.ok().build();
     }
 
+    @DeleteMapping("/all")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Map<String, Object>> deleteAllPolls() {
+        long deleted = pollService.deleteAllPolls();
+        return ResponseEntity.ok(Map.of("deleted", deleted, "scope", "ALL"));
+    }
+
+    @DeleteMapping("/active")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Map<String, Object>> deleteActivePolls() {
+        long deleted = pollService.deleteActivePolls();
+        return ResponseEntity.ok(Map.of("deleted", deleted, "scope", "ACTIVE"));
+    }
+
     @GetMapping("/{pollId}/candidates")
     public ResponseEntity<List<Candidate>> getCandidatesByPollId(@PathVariable Long pollId) {
         List<Candidate> candidates = candidateRepository.findByPollId(pollId);

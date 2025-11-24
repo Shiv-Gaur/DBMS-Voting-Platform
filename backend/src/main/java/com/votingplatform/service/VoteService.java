@@ -33,6 +33,9 @@ public class VoteService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private LedgerService ledgerService;
+
     public Vote castVote(VoteRequest request, HttpServletRequest httpRequest) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByEmail(email)
@@ -55,7 +58,9 @@ public class VoteService {
         vote.setUser(user);
         vote.setIpAddress(getClientIp(httpRequest));
 
-        return voteRepository.save(vote);
+        Vote savedVote = voteRepository.save(vote);
+        ledgerService.recordVoteCast(savedVote);
+        return savedVote;
     }
 
     public boolean hasUserVoted(Long pollId) {

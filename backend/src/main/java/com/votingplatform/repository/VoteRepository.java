@@ -2,6 +2,7 @@ package com.votingplatform.repository;
 
 import com.votingplatform.entity.Vote;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -21,4 +22,10 @@ public interface VoteRepository extends JpaRepository<Vote, Long> {
     List<Object[]> getPollResults(@Param("pollId") Long pollId);
     
     long countByPollId(Long pollId);
+
+    @Modifying
+    long deleteByPollId(Long pollId);
+
+    @Modifying
+    long deleteByUserIdIn(List<Long> userIds);
 }

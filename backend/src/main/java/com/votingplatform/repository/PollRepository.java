@@ -2,6 +2,7 @@ package com.votingplatform.repository;
 
 import com.votingplatform.entity.Poll;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -15,4 +16,7 @@ public interface PollRepository extends JpaRepository<Poll, Long> {
     List<Poll> findActivePolls(LocalDateTime now);
     
     List<Poll> findByStatus(Poll.Status status);
+
+    @Modifying
+    long deleteByStatus(Poll.Status status);
 }

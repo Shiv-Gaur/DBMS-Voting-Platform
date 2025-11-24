@@ -86,8 +86,53 @@ export const pollApi = {
     return response.data
   },
   
+  deleteAllPolls: async () => {
+    const response = await api.delete('/polls/all')
+    return response.data
+  },
+  
+  deleteActivePolls: async () => {
+    const response = await api.delete('/polls/active')
+    return response.data
+  },
+  
   getActivePolls: async () => {
     const response = await api.get('/polls/active')
+    return response.data
+  },
+}
+
+export const adminApi = {
+  importVoters: async (formData) => {
+    const response = await api.post('/admin/voters/import', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    return response.data
+  },
+
+  searchVoters: async (query) => {
+    const response = await api.get('/admin/voters/search', {
+      params: { q: query },
+    })
+    return response.data
+  },
+
+  deleteAllVoters: async () => {
+    const response = await api.delete('/admin/voters/all')
+    return response.data
+  },
+}
+
+export const ledgerApi = {
+  getEntries: async () => {
+    const response = await api.get('/ledger')
+    return response.data
+  },
+
+  getLatest: async () => {
+    const response = await api.get('/ledger/latest')
     return response.data
   },
 }

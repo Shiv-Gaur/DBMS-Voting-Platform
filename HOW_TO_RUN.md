@@ -182,6 +182,18 @@ MySQL Database (:3306)
 
 ---
 
+## Postman Smoke Tests
+
+1. **Import assets** from `postman/voting-platform.postman_collection.json` and `postman/voting-platform.local.postman_environment.json`.
+2. **Select the environment** in Postman (it preloads localhost URLs and default demo credentials).
+3. Run **Admin Login** to store `ADMIN_TOKEN`, then **Get All Polls** or **Create Poll**.
+4. Run **Voter Login** to store `VOTER_TOKEN`, set `POLL_ID`/`CANDIDATE_ID` (use "Get Candidates" to find IDs), then fire **Cast Vote**.
+5. Finish with **Ledger → List Entries** to show the new block and prove the hash chain updated.
+
+Each request only uses basic headers and JSON bodies so you can demo the API quickly without extra scripting.
+
+---
+
 ## Need Help?
 
 Check the README.md files inside each backend package folder for detailed explanations of what each component does.
